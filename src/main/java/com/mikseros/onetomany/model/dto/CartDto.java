@@ -2,6 +2,7 @@ package com.mikseros.onetomany.model.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mikseros.onetomany.model.Cart;
 import com.mikseros.onetomany.model.Item;
@@ -12,13 +13,13 @@ import lombok.Data;
 public class CartDto {
 	private Long id;
 	private String name;
-	private List<Item> items = new ArrayList<>();
+	private List<ItemDto> itemsDto = new ArrayList<>();
 	
 	public static CartDto from(Cart cart) {
 		CartDto cartDto = new CartDto();
 		cartDto.setId(cart.getId());
 		cartDto.setName(cart.getName());
-		cartDto.setItems(cart.getItems());
+		cartDto.setItemsDto(cart.getItems().stream().map(ItemDto::from).collect(Collectors.toList()));
 		return cartDto;
 	}
 }
