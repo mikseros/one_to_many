@@ -6,6 +6,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mikseros.onetomany.exception.CartNotFoundException;
 import com.mikseros.onetomany.model.Cart;
@@ -44,12 +45,14 @@ public class CartService {
 		return cart;
 	}
 	
+	@Transactional
 	public Cart editCart(Long id, Cart cart) {
 		Cart cartToEdit = getCart(id);
 		cartToEdit.setName(cart.getName());
 		return cartToEdit;
 	}
 	
+	@Transactional
 	public Cart addItemToCart(Long cartId, Long itemId) {
 		Cart cart = getCart(cartId);
 		Item item = itemService.getItem(itemId);
@@ -57,6 +60,7 @@ public class CartService {
 		return cart;
 	}
 	
+	@Transactional
 	public Cart removeItemFromCart(Long cartId, Long itemId) {
 		Cart cart = getCart(cartId);
 		Item item = itemService.getItem(itemId);

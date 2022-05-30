@@ -6,6 +6,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mikseros.onetomany.exception.ItemNotFoundException;
 import com.mikseros.onetomany.model.Item;
@@ -41,7 +42,7 @@ public class ItemService {
 		itemRepository.delete(item);
 		return item;
 	}
-	
+	@Transactional
 	public Item editItem(Long id, Item item) {
 		Item itemToEdit = getItem(id);
 		itemToEdit.setSerialNumber(item.getSerialNumber());

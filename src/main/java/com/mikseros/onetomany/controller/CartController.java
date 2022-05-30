@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,27 @@ public class CartController {
 	@DeleteMapping(value = "{id}")
 	public ResponseEntity<CartDto> deleteCart(@PathVariable final Long id) {
 		Cart cart = cartService.deleteCart(id);
+		return new ResponseEntity<>(CartDto.from(cart), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "{id}")
+	public ResponseEntity<CartDto> editCart(@PathVariable final Long id,
+											@RequestBody final CartDto cartDto) {
+		Cart cart = cartService.editCart(id, Cart.from(cartDto));
+		return new ResponseEntity<>(CartDto.from(cart), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "{cartId}/items/{itemId}/add")
+	public ResponseEntity<CartDto> addItemToCart(@PathVariable final Long cartId,
+												@PathVariable final Long itemId) {
+		Cart cart = cartService.addItemToCart(cartId, itemId);
+		return new ResponseEntity<>(CartDto.from(cart), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "{cartId}/items/{itemId}/remove")
+	public ResponseEntity<CartDto> removeItemFromCart(@PathVariable final Long cartId,
+														 @PathVariable final Long itemId) {
+		Cart cart = cartService.removeItemFromCart(cartId, itemId);
 		return new ResponseEntity<>(CartDto.from(cart), HttpStatus.OK);
 	}
 }
