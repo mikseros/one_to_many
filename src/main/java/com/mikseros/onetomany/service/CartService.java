@@ -1,6 +1,7 @@
 package com.mikseros.onetomany.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mikseros.onetomany.exception.CartNotFoundException;
+import com.mikseros.onetomany.exception.ItemIsAlreadyAssignedException;
 import com.mikseros.onetomany.model.Cart;
 import com.mikseros.onetomany.model.Item;
 import com.mikseros.onetomany.repository.CartRepository;
@@ -56,6 +58,10 @@ public class CartService {
 	public Cart addItemToCart(Long cartId, Long itemId) {
 		Cart cart = getCart(cartId);
 		Item item = itemService.getItem(itemId);
+		if(Objects.nonNull(item.getCart())) {
+			throw new ItemIsAlreadyAssignedException(itemId,
+					item.getCart().getId());
+		}
 		cart.addItem(item);
 		return cart;
 	}
