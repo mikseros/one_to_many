@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,5 +40,17 @@ public class CartController {
 		List<Cart> carts = cartService.getCarts();
 		List<CartDto> cartsDto = carts.stream().map(CartDto::from).collect(Collectors.toList());
 		return new ResponseEntity<>(cartsDto, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "{id}")
+	public ResponseEntity<CartDto> getCart(@PathVariable final Long id) {
+		Cart cart = cartService.getCart(id);
+		return new ResponseEntity<>(CartDto.from(cart), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "{id}")
+	public ResponseEntity<CartDto> deleteCart(@PathVariable final Long id) {
+		Cart cart = cartService.deleteCart(id);
+		return new ResponseEntity<>(CartDto.from(cart), HttpStatus.OK);
 	}
 }
