@@ -27,10 +27,7 @@ public class Cart {
 	)
 	@JoinColumn(name = "cart_id")
 	private List<Item> items = new ArrayList<>();
-	
-	public Cart() {
-		super();
-	}
+	// don't need constructor because there is @Data lombok annotation
 	
 	public void addItem(Item item) {
 		items.add(item);

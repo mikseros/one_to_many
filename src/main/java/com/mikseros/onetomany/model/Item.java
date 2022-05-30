@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.mikseros.onetomany.model.dto.ItemDto;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +19,9 @@ public class Item {
 	private Long id;
 	private String serialNumber;
 	
-	public Item() {
+	public static Item from(ItemDto itemDto) {
+		Item item = new Item();
+		item.setSerialNumber(itemDto.getSerialNumber());
+		return item;
 	}
 }
