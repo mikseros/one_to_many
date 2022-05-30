@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mikseros.onetomany.exception.CartNotFoundException;
 import com.mikseros.onetomany.model.Cart;
+import com.mikseros.onetomany.model.Item;
 import com.mikseros.onetomany.repository.CartRepository;
 
 @Service
@@ -47,5 +48,19 @@ public class CartService {
 		Cart cartToEdit = getCart(id);
 		cartToEdit.setName(cart.getName());
 		return cartToEdit;
+	}
+	
+	public Cart addItemToCart(Long cartId, Long itemId) {
+		Cart cart = getCart(cartId);
+		Item item = itemService.getItem(itemId);
+		cart.addItem(item);
+		return cart;
+	}
+	
+	public Cart removeItemFromCart(Long cartId, Long itemId) {
+		Cart cart = getCart(cartId);
+		Item item = itemService.getItem(itemId);
+		cart.removeItem(item);
+		return cart;
 	}
 }
