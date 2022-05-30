@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.mikseros.onetomany.model.Cart;
-import com.mikseros.onetomany.model.Item;
 
 import lombok.Data;
 

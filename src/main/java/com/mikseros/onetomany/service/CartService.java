@@ -63,6 +63,7 @@ public class CartService {
 					item.getCart().getId());
 		}
 		cart.addItem(item);
+		item.setCart(cart);
 		return cart;
 	}
 	
