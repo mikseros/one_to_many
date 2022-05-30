@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.mikseros.onetomany.model.dto.CartDto;
+
 import lombok.Data;
 
 @Data
@@ -35,5 +37,11 @@ public class Cart {
 	
 	public void removeItem(Item item) {
 		items.remove(item);
+	}
+	
+	public static Cart from(CartDto cartDto) {
+		Cart cart = new Cart();
+		cart.setName(cartDto.getName());
+		return cart;
 	}
 }
